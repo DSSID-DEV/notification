@@ -1,0 +1,52 @@
+server:
+  port: 8084
+  servlet:
+    context-path: '/ead-notification/'
+
+spring:
+  application:
+    name: ead-notification-service
+  datasource:
+    url: jdpc:postgresql://localhost:5432/ead-notification-v2
+    username: postgres
+    password: banco123
+  jpa:
+    ddl-auto: update
+    dialect: org.hibernate.dialect.PostgreSQLDialect
+    jdbc:
+      lob.non-contextual-creation: true
+    properties:
+      hibernate:
+        show_sql: true
+  output:
+    ansi:
+      enabled: always
+  rabbitmq:
+    addresses: amqps://frmttege:Sw-UPde7EUrKk1txkh0O1PG8vuhd3KkN@sparrow.rmq.cloudamqp.com/frmttege
+
+logging:
+  level:
+    com.ead: TRACE
+    root: INFO
+    org.springframework.web: DEBUG
+    org.hibernate: INFO
+
+ead:
+  broker:
+    exchange:
+      notificationCommandExchange: ead.notificationcommand
+    queue:
+      notificationCommandQueue:
+        name: ead.notificationcommand.ms.notification
+    key:
+      notificationCommandkey: ms.notification
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - reflesh
+          - health
+
+
